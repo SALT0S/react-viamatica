@@ -1,7 +1,7 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, UserIcon, XIcon } from '@heroicons/react/outline';
 import React, { Fragment } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const user = {
   name: 'Admin',
@@ -11,7 +11,6 @@ const navigation = [
   { name: 'Posts', href: 'post' },
   { name: 'Posts Destacados', href: 'featured-post' },
 ];
-const userNavigation = [{ name: 'Sign out', href: '#' }];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -19,21 +18,15 @@ function classNames(...classes) {
 
 const NavbarMenu = () => {
   const history = useNavigate();
-  const location = useLocation();
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     history.push('/');
   };
 
-  const userNavigation = [
-    { name: 'Sign out', href: '/login', onClick: handleLogout },
-    { name: 'Logout', href: '#', onClick: handleLogout },
-  ];
-
-  if (location.pathname === '/login') {
-    return null;
-  }
+  const userNavigation = user
+    ? [{ name: 'Sign out', onClick: handleLogout }]
+    : [{ name: 'Sign in', to: '/' }];
 
   return (
     <Disclosure as="header" className="bg-white shadow">
@@ -96,7 +89,8 @@ const NavbarMenu = () => {
                         <Menu.Item key={item.name}>
                           {({ active }) => (
                             <Link
-                              to={item.href}
+                              to={item.to || '#'}
+                              onClick={item.onClick}
                               className={classNames(
                                 active ? 'bg-gray-100' : '',
                                 'block py-2 px-4 text-sm text-gray-700'
@@ -179,13 +173,14 @@ const NavbarMenu = () => {
               </div>
               <div className="mt-3 px-2 space-y-1">
                 {userNavigation.map((item) => (
-                  <button
+                  <Disclosure.Button
                     key={item.name}
+                    as={Link}
+                    to={item.href}
                     className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
-                    onClick={item.name === 'Logout' ? handleLogout : null}
                   >
                     {item.name}
-                  </button>
+                  </Disclosure.Button>
                 ))}
               </div>
             </div>

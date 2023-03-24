@@ -1,19 +1,27 @@
 import { LockClosedIcon } from '@heroicons/react/solid';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/post');
+    }
+  }, [navigate]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     if (username === 'admin' && password === 'admin') {
       localStorage.setItem('token', 'Bearer');
-      // Redirect to home page or dashboard
+      navigate('/post');
     } else {
-      setError('Invalid username or password');
+      setError('Usuario o contraseña invalidos');
     }
   };
 

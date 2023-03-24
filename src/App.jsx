@@ -16,7 +16,7 @@ function App() {
       <BrowserRouter>
         <Menu />
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route exact path="/" element={<LoginPage />} />
           <Route
             path="featured-post"
             element={isAuthenticated() ? <FeaturedPost /> : <Navigate to="/" />}
