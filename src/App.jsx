@@ -17,11 +17,11 @@ function App() {
         <Routes>
           <Route exact path="/" element={<LoginPage />} />
           <Route
-            path="featured-post"
+            path="#/featured-post"
             element={isAuthenticated() ? <FeaturedPost /> : <Navigate to="/" />}
           />
           <Route
-            path="post"
+            path="#/post"
             element={isAuthenticated() ? <PostPage /> : <Navigate to="/" />}
           />
           <Route path="*" element={<p>Not found</p>} />
