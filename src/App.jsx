@@ -1,5 +1,4 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import './App.css';
 import Menu from './menu';
 import FeaturedPost from './pages/FeaturedPost';
 import LoginPage from './pages/LoginPage';

@@ -1,6 +1,5 @@
 import { HeartIcon } from '@heroicons/react/outline';
 import React, { useEffect, useState } from 'react';
-import '../App.css';
 
 function PostPage() {
   const [posts, setPosts] = useState([]);
