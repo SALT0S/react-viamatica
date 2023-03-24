@@ -11,7 +11,7 @@ const LoginPage = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      navigate('#/post');
+      navigate('/post');
     }
   }, [navigate]);
 
@@ -19,7 +19,7 @@ const LoginPage = () => {
     event.preventDefault();
     if (username === 'admin' && password === 'admin') {
       localStorage.setItem('token', 'Bearer');
-      navigate('#/post');
+      navigate('/post');
     } else {
       setError('Usuario o contraseña invalidos');
     }
