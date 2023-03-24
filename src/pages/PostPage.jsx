@@ -3,9 +3,24 @@ import React, { useEffect, useState } from 'react';
 
 function PostPage() {
   const [posts, setPosts] = useState([]);
-  const [favorites, setFavorites] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [favorites, setFavorites] = useState(
+    () => JSON.parse(localStorage.getItem('favorites')) || []
+  );
+
+  // Cargar favoritos almacenados en el localStorage al montar el componente
+  useEffect(() => {
+    const storedFavorites = localStorage.getItem('favorites');
+    if (storedFavorites) {
+      setFavorites(JSON.parse(storedFavorites));
+    }
+  }, []);
+
+  // Guardar favoritos en el localStorage cuando cambia la variable `favorites`
+  useEffect(() => {
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }, [favorites]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -26,11 +41,11 @@ function PostPage() {
     const postAlreadyInFavorites = favorites.some((post) => post.id === id);
 
     if (!postAlreadyInFavorites) {
-      setFavorites((prevFavorites) => [...prevFavorites, postToAdd]);
-      localStorage.setItem(
-        'favorites',
-        JSON.stringify([...favorites, postToAdd])
-      );
+      setFavorites((prevFavorites) => {
+        const newFavorites = [...prevFavorites, postToAdd];
+        localStorage.setItem('favorites', JSON.stringify(newFavorites));
+        return newFavorites;
+      });
     }
   };
 
