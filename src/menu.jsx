@@ -1,7 +1,7 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, UserIcon, XIcon } from '@heroicons/react/outline';
 import React, { Fragment } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 const user = {
   name: 'Admin',
@@ -111,19 +111,15 @@ const NavbarMenu = () => {
               aria-label="Global"
             >
               {navigation.map((item) => (
-                <Link
+                <NavLink
                   key={item.name}
                   to={item.href}
-                  className={classNames(
-                    item.current
-                      ? 'bg-gray-100 text-gray-900'
-                      : 'text-gray-900 hover:bg-gray-50 hover:text-gray-900',
-                    'rounded-md py-2 px-3 inline-flex items-center text-sm font-medium'
-                  )}
-                  aria-current={item.current ? 'page' : undefined}
+                  className={({ isActive }) =>
+                    isActive ? 'text-blue-500' : ''
+                  }
                 >
                   {item.name}
-                </Link>
+                </NavLink>
               ))}
             </nav>
           </div>
@@ -133,15 +129,13 @@ const NavbarMenu = () => {
               {navigation.map((item) => (
                 <Disclosure.Button
                   key={item.name}
-                  as={Link}
+                  as={NavLink}
                   to={item.href}
-                  className={classNames(
-                    item.current
-                      ? 'bg-gray-100 text-gray-900'
-                      : 'text-gray-900 hover:bg-gray-50 hover:text-gray-900',
-                    'block rounded-md py-2 px-3 text-base font-medium'
-                  )}
-                  aria-current={item.current ? 'page' : undefined}
+                  className={({ isActive }) =>
+                    isActive
+                      ? 'text-blue-500'
+                      : 'block rounded-md py-2 px-3 text-base font-medium'
+                  }
                 >
                   {item.name}
                 </Disclosure.Button>
